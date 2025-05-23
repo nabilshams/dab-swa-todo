@@ -19,6 +19,18 @@ jobs:
       - uses: actions/checkout@v3
         with:
           submodules: true
+      
+      - name: Install sqlpackage
+        run: |
+          wget https://aka.ms/sqlpackage-linux -O sqlpackage.zip
+          unzip sqlpackage.zip -d sqlpackage
+          chmod +x sqlpackage/sqlpackage
+          sudo mv sqlpackage /opt/sqlpackage
+          echo "/opt/sqlpackage" >> $GITHUB_PATH
+
+      - name: Verify sqlpackage installation
+        run: sqlpackage /?
+
       - name: Build And Deploy DB        
         uses: azure/sql-action@v2
         with:        
