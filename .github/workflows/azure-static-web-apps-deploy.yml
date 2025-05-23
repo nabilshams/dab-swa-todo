@@ -13,15 +13,12 @@ on:
 jobs:
   build_and_deploy_job:
     if: github.event_name == 'workflow_dispatch' || github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action != 'closed')
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     name: Build and Deploy Job
     steps:
       - uses: actions/checkout@v3
         with:
           submodules: true
-      - name: Install SQL Packager
-        shell: cmd
-        run: dotnet tool install -g microsoft.sqlpackage
       - name: Build And Deploy DB        
         uses: azure/sql-action@v2
         with:        
